@@ -1,6 +1,7 @@
 from hashlib import sha256
 
 logged_in = False
+active = False
 
 users = open(r"users.txt", "a")
 users.close()
@@ -27,10 +28,22 @@ if Options.lower() == "log in":
             print("Username or password incorrect! Try again...")
 
 if logged_in == True:
-    Current_user = open(f"user_{i+1}", "a")
-    Current_user_data = Current_user.read
-    Current_user_data.split(", ")
+    Current_user = open(f"user_{i+1}", "a+")
+    Current_user_data = Current_user.read()
+    UserPermissions = Current_user_data.split(",")
+    if len(Current_user_data) == 0:
+        Current_user.write("canmessage,canfriend,canread")
     Current_user.close
+    active = True
+
+while active == True:
+    activity = input(f"What do you want to do today? ")
+    if activity == "message":
+        print("Enter username of message recipient: ")
+        for i in range(len(Listed_users)):
+            if username == Listed_users[i]:
+                message = input("Enter message: ")
+                print(message)
 
 if Options.lower() == "sign up":
     newusername = input("Enter new username: ")
