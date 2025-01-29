@@ -64,6 +64,7 @@ while active == True:
             confirmation = input("This is your last warning. Are you sure you want to delete your account? [" + Fore.GREEN + "Y" + Fore.RESET + "/" + Fore.RED + "N" + Fore.RESET + "]")
             if confirmation.upper() == "Y":
                 os.remove(f"user_{ActiveUser}.txt")
+                os.remove(f"mailbox_{username}.txt")
                 newuserslist = Userslist.replace(f"{username},{hashedpassword},", "")
                 with open("users.txt", "w") as edituserslist:
                     edituserslist.write(newuserslist)
@@ -75,6 +76,7 @@ while active == True:
                 print("account deletion cancelled")
         if confirmation.upper() == "N":
             print("account deletion cancelled")
+        break
     elif activity.lower() == "message":
         checkpermissions = open(f"user_{ActiveUser}.txt", "r")
         checkpermissions = checkpermissions.read()
@@ -121,7 +123,29 @@ if Options.lower() == "sign up":
         newaccount = (f"{newusername},{hashed_newpassword}")
         users = open("users.txt", "a")
         users.write(f"{newaccount},")
+        users.close
         print(f"You have created an account, {newusername}!")
+
+if Options.lower() == "setup":
+    print(Fore.RED + "Setup procedure...")
+    print("User for setup added with username setup and password setup!")
+    print("! Dont forget to delete setup user so you to avoid security risks !")
+    newusername = "setup"
+    newpassword = "setup"
+    h = sha256()
+    h.update(f'{newpassword}'.encode('utf-8'))
+    hashed_newpassword = h.hexdigest()
+    newaccount = (f"{newusername},{hashed_newpassword}")
+    users = open("users.txt", "a")
+    users.write(f"{newaccount},")
+    users.close
+    with open(f"user_{ActiveUser}.txt", "a+") as addsetupperms:
+        if addsetupperms.read().strip() == "":
+            with open(f"user_{ActiveUser}.txt", "w") as addsetupperms:
+                addsetupperms.write("canpromote")
+    removesetup = open("login.py", "w+")
+    removingsetup = removesetup.read()
+    removingsetup = removingsetup.replace('if Options.lower() == "setup":', '')
 
 else:
     print("Username or password incorrect! Try again...")
