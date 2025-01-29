@@ -1,14 +1,18 @@
 from hashlib import sha256
+from colorama import Fore, Back, Style
+import os
 
 logged_in = False
 active = False
+message_shown = False
+User_found = False
 
 users = open(r"users.txt", "a")
 users.close()
 users = open(r"users.txt", "r")
-Extracted_Data = users.read()
+Userslist = users.read()
 users.close()
-Extracted_Data = Extracted_Data.split(",")
+Extracted_Data = Userslist.split(",")
 Listed_users = Extracted_Data[0::2]
 Listed_passwords = Extracted_Data[1::2]
 
@@ -23,27 +27,86 @@ if Options.lower() == "log in":
     for i in range(len(Listed_passwords)):
         if username == Listed_users[i] and hashedpassword == Listed_passwords[i]:
             logged_in = True
+            ActiveUser = (i+1)
             print(f"Welcome {username}!")
-        else:
-            print("Username or password incorrect! Try again...")
 
 if logged_in == True:
-    Current_user = open(f"user_{i+1}", "a+")
-    Current_user_data = Current_user.read()
-    UserPermissions = Current_user_data.split(",")
-    if len(Current_user_data) == 0:
-        Current_user.write("canmessage,canfriend,canread")
-    Current_user.close
+    with open(f"user_{ActiveUser}.txt", "a+") as adddefaultperms:
+        if adddefaultperms.read().strip() == '':
+            with open(f"user_{ActiveUser}.txt", "w") as adddefaultperms:
+                adddefaultperms.write("canmessage,canread")
     active = True
 
 while active == True:
-    activity = input(f"What do you want to do today? ")
-    if activity == "message":
-        print("Enter username of message recipient: ")
-        for i in range(len(Listed_users)):
-            if username == Listed_users[i]:
-                message = input("Enter message: ")
-                print(message)
+    message_shown = False
+    activity = input(f"What do you want to do today? [help for a list of commands] ")
+    if activity == "promote":
+        checkpermissions = open(f"user_{ActiveUser}.txt", "r")
+        checkpermissions = checkpermissions.read()
+        if "canpromote" in checkpermissions:
+            target = input("Enter username of promotion target: ")
+            for i in range(len(Listed_users)):
+                if recipient == Listed_users[i]:
+                    target = i+1
+                    promotion_level = input("Enter targets new access level: ")
+                    if promotion_level == 1:
+                        promotionnewaccesslevel = "canmessage,canread"
+                    if promotion_level == 10:
+                        promotionnewaccesslevel = "canmessage,canread,canpromote"
+                    confirmation = input(f"Are you sure you want to promote {target}? [" + Fore.GREEN + "Y" + Fore.RESET + "/" + Fore.RED + "N" + Fore.RESET + "]")
+                    if confirmation.upper() == "Y":
+                        with open(f"user_{target}.txt", "w+") as promotion:
+                            promotion.write(f"{promotionnewaccesslevel}")
+    elif activity.lower() == "deleteaccount":
+        confirmation = input("Are you sure you want to delete your account? [" + Fore.GREEN + "Y" + Fore.RESET + "/" + Fore.RED + "N" + Fore.RESET + "]")
+        if confirmation.upper() == "Y":
+            print("You will not be able to sign in to this account again, your mailbox will be cleared and all user data will be deleted.")
+            confirmation = input("This is your last warning. Are you sure you want to delete your account? [" + Fore.GREEN + "Y" + Fore.RESET + "/" + Fore.RED + "N" + Fore.RESET + "]")
+            if confirmation.upper() == "Y":
+                os.remove(f"user_{ActiveUser}.txt")
+                newuserslist = Userslist.replace(f"{username},{hashedpassword},", "")
+                with open("users.txt", "w") as edituserslist:
+                    edituserslist.write(newuserslist)
+                print(f"User {username} deleted")
+                for i in range(len(Listed_passwords)):
+                    if ActiveUser < i+1:
+                      os.rename(f"user_{i+1}.txt", f"user_{i}.txt")
+            if confirmation.upper() == "N":
+                print("account deletion cancelled")
+        if confirmation.upper() == "N":
+            print("account deletion cancelled")
+    elif activity.lower() == "message":
+        checkpermissions = open(f"user_{ActiveUser}.txt", "r")
+        checkpermissions = checkpermissions.read()
+        if "canmessage" in checkpermissions:
+            recipient = input("Enter username of message recipient: ")
+            for i in range(len(Listed_users)):
+                if recipient == Listed_users[i]:
+                    message = input("Enter message: ")
+                    messagesending = open(f"mailbox_{recipient}.txt", "a")
+                    messagesending.write(f"{message}\n")
+                    messagesending.close
+                if recipient not in Listed_users and message_shown == False:
+                    message_shown = True
+                    print("User does not exist")
+    elif activity == "readmail":
+        checkpermissions = open(f"user_{ActiveUser}.txt", "r")
+        checkpermissions = checkpermissions.read()
+        if "canread" in checkpermissions:
+            with  open(f"mailbox_{username}.txt", "r") as mailbox:
+                printmail = mailbox.read()
+                print(Fore.YELLOW + f"{printmail}" + Fore.RESET)
+                maildeletion = input(f"Would you like to empty your mailbox? [" + Fore.GREEN + "Y" + Fore.RESET + "/" + Fore.RED + "N" + Fore.RESET + "]")
+                if maildeletion.upper() == "Y":
+                    with open(f"mailbox_{username}.txt", "w") as mailbox:
+                        print(Fore.RED + "Mail deleted" + Fore.RESET)
+                        mailbox.write("")
+                if maildeletion.upper() == "N":
+                    print("mail kept")
+    elif activity == "help":
+        print(Fore.CYAN + "message = Send a message to a different user\nreadmail = Read the mail other people have sent to you\nquit = Close the application" + Fore.RESET)
+    elif activity == "quit":
+        break
 
 if Options.lower() == "sign up":
     newusername = input("Enter new username: ")
@@ -59,3 +122,6 @@ if Options.lower() == "sign up":
         users = open("users.txt", "a")
         users.write(f"{newaccount},")
         print(f"You have created an account, {newusername}!")
+
+else:
+    print("Username or password incorrect! Try again...")
