@@ -41,9 +41,10 @@ if logged_in == True:
 while active == True:
     message_shown = False
     if username == "setup":
-        print("!Do not forget to delete your setup user!")
-    with  open(f"mailbox_{username}.txt", "r") as mailcheck:
-        if len(mailcheck) > 0:
+        print(="!Do not forget to delete your setup user!")
+    with  open(f"mailbox_{username}.txt", "a+") as mailcheck:
+        mailbox = mailcheck.read()
+        if len(mailbox) > 0:
             print(Fore.CYAN + "You have new mail!")
     activity = input(f"What do you want to do today? [help for a list of commands] ")
     if activity == "promote":
@@ -141,9 +142,9 @@ if Options.lower() == "sign up":
         print(f"You have created an account, {newusername}!")
 
 if Options.lower() == "setup":
-        if not Listed_users == "":
+        if "" not in Listed_users:
             print("Login already set up, you cannot use it again...")
-        elif Listed_users == "":
+        elif "" in Listed_users:
             print(Fore.RED + "Setup procedure...")
             print("User for setup added with username setup and password setup!")
             print("! Dont forget to delete setup user so you to avoid security risks !")
