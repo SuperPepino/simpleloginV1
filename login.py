@@ -40,6 +40,8 @@ if logged_in == True:
 
 while active == True:
     message_shown = False
+    if username == "setup":
+        print("!Do not forget to delete your setup user!")
     with  open(f"mailbox_{username}.txt", "r") as mailcheck:
         if len(mailcheck) > 0:
             print(Fore.CYAN + "You have new mail!")
@@ -62,25 +64,33 @@ while active == True:
                         with open(f"user_{target}.txt", "w+") as promotion:
                             promotion.write(f"{promotionnewaccesslevel}")
     elif activity.lower() == "deleteaccount":
-        confirmation = input("Are you sure you want to delete your account? [" + Fore.GREEN + "Y" + Fore.RESET + "/" + Fore.RED + "N" + Fore.RESET + "]")
-        if confirmation.upper() == "Y":
-            print("You will not be able to sign in to this account again, your mailbox will be cleared and all user data will be deleted.")
-            confirmation = input("This is your last warning. Are you sure you want to delete your account? [" + Fore.GREEN + "Y" + Fore.RESET + "/" + Fore.RED + "N" + Fore.RESET + "]")
+        if username == "setup":
+            os.remove("user_1.txt")
+            os.remove("mailbox_setup.txt")
+            newuserslist = Userslist.replace(f"{username},{hashedpassword},", "")
+            with open("users.txt", "w") as edituserslist:
+                edituserslist.write(newuserslist)
+                print("Setup user deleted")
+        else:
+            confirmation = input("Are you sure you want to delete your account? [" + Fore.GREEN + "Y" + Fore.RESET + "/" + Fore.RED + "N" + Fore.RESET + "]")
             if confirmation.upper() == "Y":
-                os.remove(f"user_{ActiveUser}.txt")
-                os.remove(f"mailbox_{username}.txt")
-                newuserslist = Userslist.replace(f"{username},{hashedpassword},", "")
-                with open("users.txt", "w") as edituserslist:
-                    edituserslist.write(newuserslist)
-                print(f"User {username} deleted")
-                for i in range(len(Listed_passwords)):
-                    if ActiveUser < i+1:
-                      os.rename(f"user_{i+1}.txt", f"user_{i}.txt")
+                print("You will not be able to sign in to this account again, your mailbox will be cleared and all user data will be deleted.")
+                confirmation = input("This is your last warning. Are you sure you want to delete your account? [" + Fore.GREEN + "Y" + Fore.RESET + "/" + Fore.RED + "N" + Fore.RESET + "]")
+                if confirmation.upper() == "Y":
+                    os.remove(f"user_{ActiveUser}.txt")
+                    os.remove(f"mailbox_{username}.txt")
+                    newuserslist = Userslist.replace(f"{username},{hashedpassword},", "")
+                    with open("users.txt", "w") as edituserslist:
+                        edituserslist.write(newuserslist)
+                    print(f"User {username} deleted")
+                    for i in range(len(Listed_passwords)):
+                        if ActiveUser < i+1:
+                          os.rename(f"user_{i+1}.txt", f"user_{i}.txt")
+                if confirmation.upper() == "N":
+                    print("account deletion cancelled")
             if confirmation.upper() == "N":
                 print("account deletion cancelled")
-        if confirmation.upper() == "N":
-            print("account deletion cancelled")
-        break
+            break
     elif activity.lower() == "message":
         checkpermissions = open(f"user_{ActiveUser}.txt", "r")
         checkpermissions = checkpermissions.read()
@@ -131,13 +141,9 @@ if Options.lower() == "sign up":
         print(f"You have created an account, {newusername}!")
 
 if Options.lower() == "setup":
-    for i in range(len(Listed_users)):
-        checkused = open(f"user_{i+1}.txt")
-        checksetupused = checkused.readlines()
-        checkused.close()
-        if "canpromote" in checksetupused[0]:
+        if not Listed_users == "":
             print("Login already set up, you cannot use it again...")
-        if "canpromote" not in checksetupused[0]:
+        elif Listed_users == "":
             print(Fore.RED + "Setup procedure...")
             print("User for setup added with username setup and password setup!")
             print("! Dont forget to delete setup user so you to avoid security risks !")
@@ -148,16 +154,12 @@ if Options.lower() == "setup":
             hashed_newpassword = h.hexdigest()
             newaccount = (f"{newusername},{hashed_newpassword}")
             users = open("users.txt", "a")
-            users.write(f"{newaccount},")
+            users.write(f"{newaccount}")
             users.close
             with open(f"user_1.txt", "a+") as addsetupperms:
                 if addsetupperms.read().strip() == "":
                     with open(f"user_1.txt", "w") as addsetupperms:
                         addsetupperms.write("canpromote")
-            removesetup = open("login.py", "a+")
-            removingsetup = removesetup.readlines()
-            print(removingsetup)
-            removesetup.write("setupused = True")
 
 else:
     print("Username or password incorrect! Try again...")
