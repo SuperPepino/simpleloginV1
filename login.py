@@ -1,3 +1,4 @@
+setupused = False
 from hashlib import sha256
 from colorama import Fore, Back, Style
 import os
@@ -39,6 +40,9 @@ if logged_in == True:
 
 while active == True:
     message_shown = False
+    with  open(f"mailbox_{username}.txt", "r") as mailcheck:
+        if len(mailcheck) > 0:
+            print(Fore.CYAN + "You have new mail!")
     activity = input(f"What do you want to do today? [help for a list of commands] ")
     if activity == "promote":
         checkpermissions = open(f"user_{ActiveUser}.txt", "r")
@@ -122,30 +126,38 @@ if Options.lower() == "sign up":
         hashed_newpassword = h.hexdigest()
         newaccount = (f"{newusername},{hashed_newpassword}")
         users = open("users.txt", "a")
-        users.write(f"{newaccount},")
+        users.write(f",{newaccount}")
         users.close
         print(f"You have created an account, {newusername}!")
 
 if Options.lower() == "setup":
-    print(Fore.RED + "Setup procedure...")
-    print("User for setup added with username setup and password setup!")
-    print("! Dont forget to delete setup user so you to avoid security risks !")
-    newusername = "setup"
-    newpassword = "setup"
-    h = sha256()
-    h.update(f'{newpassword}'.encode('utf-8'))
-    hashed_newpassword = h.hexdigest()
-    newaccount = (f"{newusername},{hashed_newpassword}")
-    users = open("users.txt", "a")
-    users.write(f"{newaccount},")
-    users.close
-    with open(f"user_{ActiveUser}.txt", "a+") as addsetupperms:
-        if addsetupperms.read().strip() == "":
-            with open(f"user_{ActiveUser}.txt", "w") as addsetupperms:
-                addsetupperms.write("canpromote")
-    removesetup = open("login.py", "w+")
-    removingsetup = removesetup.read()
-    removingsetup = removingsetup.replace('if Options.lower() == "setup":', '')
+    for i in range(len(Listed_users)):
+        checkused = open(f"user_{i+1}.txt")
+        checksetupused = checkused.readlines()
+        checkused.close()
+        if "canpromote" in checksetupused[0]:
+            print("Login already set up, you cannot use it again...")
+        if "canpromote" not in checksetupused[0]:
+            print(Fore.RED + "Setup procedure...")
+            print("User for setup added with username setup and password setup!")
+            print("! Dont forget to delete setup user so you to avoid security risks !")
+            newusername = "setup"
+            newpassword = "setup"
+            h = sha256()
+            h.update(f'{newpassword}'.encode('utf-8'))
+            hashed_newpassword = h.hexdigest()
+            newaccount = (f"{newusername},{hashed_newpassword}")
+            users = open("users.txt", "a")
+            users.write(f"{newaccount},")
+            users.close
+            with open(f"user_1.txt", "a+") as addsetupperms:
+                if addsetupperms.read().strip() == "":
+                    with open(f"user_1.txt", "w") as addsetupperms:
+                        addsetupperms.write("canpromote")
+            removesetup = open("login.py", "a+")
+            removingsetup = removesetup.readlines()
+            print(removingsetup)
+            removesetup.write("setupused = True")
 
 else:
     print("Username or password incorrect! Try again...")
