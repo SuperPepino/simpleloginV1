@@ -45,7 +45,7 @@ while active == True:
     with  open(f"mailbox_{username}.txt", "a+") as mailcheck:
         mailbox = mailcheck.read()
         if len(mailbox) > 0:
-            print(Fore.CYAN + "You have new mail!")
+            print(Fore.CYAN + "You have new mail!" + Fore.RESET)
     activity = input(f"What do you want to do today? [help for a list of commands] ")
     if activity == "promote":
         checkpermissions = open(f"user_{ActiveUser}.txt", "r")
