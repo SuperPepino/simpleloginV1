@@ -41,7 +41,7 @@ if logged_in == True:
 while active == True:
     message_shown = False
     if username == "setup":
-        print(="!Do not forget to delete your setup user!")
+        print("!Do not forget to delete your setup user!")
     with  open(f"mailbox_{username}.txt", "a+") as mailcheck:
         mailbox = mailcheck.read()
         if len(mailbox) > 0:
@@ -121,7 +121,7 @@ while active == True:
                 if maildeletion.upper() == "N":
                     print("mail kept")
     elif activity == "help":
-        print(Fore.CYAN + "message = Send a message to a different user\nreadmail = Read the mail other people have sent to you\nquit = Close the application" + Fore.RESET)
+        print(Fore.CYAN + "message = Send a message to a different user\nreadmail = Read the mail other people have sent to you\npromote = promote a different user to give them more clearance\ndeleteaccount = delete your account\nquit = Close the application" + Fore.RESET)
     elif activity == "quit":
         break
 
