@@ -32,20 +32,22 @@ if Options.lower() == "log in":
             print(f"Welcome {username}!")
 
 if logged_in == True:
-    with open(f"user_{ActiveUser}.txt", "a+") as adddefaultperms:
-        if adddefaultperms.read().strip() == '':
+    with open(f"user_{ActiveUser}.txt", "r") as adddefaultperms:
+        defaultpermscheck = adddefaultperms.read()
+        if defaultpermscheck == "":
             with open(f"user_{ActiveUser}.txt", "w") as adddefaultperms:
                 adddefaultperms.write("canmessage,canread")
+    if username == "setup":
+        print(Fore.RED + "!Do not forget to delete your setup user!" + Fore.RESET)
     active = True
 
 while active == True:
     message_shown = False
-    if username == "setup":
-        print("!Do not forget to delete your setup user!")
-    with  open(f"mailbox_{username}.txt", "a+") as mailcheck:
-        mailbox = mailcheck.read()
-        if len(mailbox) > 0:
-            print(Fore.CYAN + "You have new mail!" + Fore.RESET)
+    if {username} != "setup":
+        with  open(f"mailbox_{username}.txt", "a+") as mailcheck:
+            mailbox = mailcheck.read()
+            if len(mailbox) > 0:
+                print(Fore.CYAN + "You have new mail!" + Fore.RESET)
     activity = input(f"What do you want to do today? [help for a list of commands] ")
     if activity == "promote":
         checkpermissions = open(f"user_{ActiveUser}.txt", "r")
@@ -53,20 +55,24 @@ while active == True:
         if "canpromote" in checkpermissions:
             target = input("Enter username of promotion target: ")
             for i in range(len(Listed_users)):
-                if recipient == Listed_users[i]:
-                    target = i+1
+                if target == Listed_users[i]:
+                    promotiontarget = i+1
                     promotion_level = input("Enter targets new access level: ")
+                    promotion_level = int(promotion_level)
                     if promotion_level == 1:
                         promotionnewaccesslevel = "canmessage,canread"
                     if promotion_level == 10:
                         promotionnewaccesslevel = "canmessage,canread,canpromote"
-                    confirmation = input(f"Are you sure you want to promote {target}? [" + Fore.GREEN + "Y" + Fore.RESET + "/" + Fore.RED + "N" + Fore.RESET + "]")
+                    confirmation = input(f"Are you sure you want to promote {target} to level {promotion_level}? [" + Fore.GREEN + "Y" + Fore.RESET + "/" + Fore.RED + "N" + Fore.RESET + "]")
                     if confirmation.upper() == "Y":
-                        with open(f"user_{target}.txt", "w+") as promotion:
+                        with open(f"user_{promotiontarget}.txt", "w+") as promotion:
                             promotion.write(f"{promotionnewaccesslevel}")
     elif activity.lower() == "deleteaccount":
         if username == "setup":
             os.remove("user_1.txt")
+            for i in range(len(Listed_passwords)):
+                        if ActiveUser < i+1:
+                          os.rename(f"user_{i+1}.txt", f"user_{i}.txt")
             os.remove("mailbox_setup.txt")
             newuserslist = Userslist.replace(f"{username},{hashedpassword},", "")
             with open("users.txt", "w") as edituserslist:
