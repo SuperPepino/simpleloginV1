@@ -7,6 +7,7 @@ logged_in = False
 active = False
 message_shown = False
 User_found = False
+user_incorrect_block = False
 
 users = open(r"users.txt", "a")
 users.close()
@@ -32,7 +33,7 @@ if Options.lower() == "log in":
             print(f"Welcome {username}!")
 
 if logged_in == True:
-    with open(f"user_{ActiveUser}.txt", "r") as adddefaultperms:
+    with open(f"user_{ActiveUser}.txt", "a+") as adddefaultperms:
         defaultpermscheck = adddefaultperms.read()
         if defaultpermscheck == "":
             with open(f"user_{ActiveUser}.txt", "w") as adddefaultperms:
@@ -78,6 +79,7 @@ while active == True:
             with open("users.txt", "w") as edituserslist:
                 edituserslist.write(newuserslist)
                 print("Setup user deleted")
+                break
         else:
             confirmation = input("Are you sure you want to delete your account? [" + Fore.GREEN + "Y" + Fore.RESET + "/" + Fore.RED + "N" + Fore.RESET + "]")
             if confirmation.upper() == "Y":
@@ -147,10 +149,14 @@ if Options.lower() == "sign up":
         h.update(f'{newpassword}'.encode('utf-8'))
         hashed_newpassword = h.hexdigest()
         newaccount = (f"{newusername},{hashed_newpassword}")
-        users = open("users.txt", "a")
-        users.write(f",{newaccount}")
-        users.close
-        print(f"You have created an account, {newusername}!")
+        users = open("users.txt", "a+")
+        if users == "":
+            print("Program not set up yet, use setup command first")
+        elif users != "":
+            users.write(f",{newaccount}")
+            users.close
+            print(f"You have created an account, {newusername}!")
+        user_incorrect_block = True
 
 
 
@@ -161,6 +167,7 @@ if Options.lower() == "setup":
             print(Fore.RED + "Setup procedure...")
             print("User for setup added with username setup and password setup!")
             print("! Dont forget to delete setup user so you to avoid security risks !")
+            user_incorrect_block = True
             newusername = "setup"
             newpassword = "setup"
             h = sha256()
@@ -175,5 +182,5 @@ if Options.lower() == "setup":
                     with open(f"user_1.txt", "w") as addsetupperms:
                         addsetupperms.write("canpromote")
 
-else:
+if user_incorrect_block is False:
     print("Username or password incorrect! Try again...")
