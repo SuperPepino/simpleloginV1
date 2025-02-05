@@ -9,9 +9,14 @@ message_shown = False
 User_found = False
 user_incorrect_block = False
 
-users = open(r"users.txt", "a")
+bannedusers = open("bannedusers.txt", "a")
+bannedusers.close()
+bannedusers = open("bannedusers.txt", "r")
+banneduserlist = bannedusers.read()
+bannedusers = banneduserlist.split(",")
+users = open("users.txt", "a")
 users.close()
-users = open(r"users.txt", "r")
+users = open("users.txt", "r")
 Userslist = users.read()
 users.close()
 Extracted_Data = Userslist.split(",")
@@ -33,7 +38,9 @@ if Options.lower() == "log in":
             print(f"Welcome {username}!")
 
 if logged_in == True:
-    with open(f"user_{ActiveUser}.txt", "a+") as adddefaultperms:
+    adddefaultperms = open(f"user_{ActiveUser}.txt", "a")
+    adddefaultperms.close()
+    with open (f"user_{ActiveUser}.txt", "r") as adddefaultperms:
         defaultpermscheck = adddefaultperms.read()
         if defaultpermscheck == "":
             with open(f"user_{ActiveUser}.txt", "w") as adddefaultperms:
@@ -79,6 +86,7 @@ while active == True:
             with open("users.txt", "w") as edituserslist:
                 edituserslist.write(newuserslist)
                 print("Setup user deleted")
+                user_incorrect_block = True
                 break
         else:
             confirmation = input("Are you sure you want to delete your account? [" + Fore.GREEN + "Y" + Fore.RESET + "/" + Fore.RED + "N" + Fore.RESET + "]")
@@ -92,6 +100,7 @@ while active == True:
                     with open("users.txt", "w") as edituserslist:
                         edituserslist.write(newuserslist)
                     print(f"User {username} deleted")
+                    user_incorrect_block = True
                     for i in range(len(Listed_passwords)):
                         if ActiveUser < i+1:
                           os.rename(f"user_{i+1}.txt", f"user_{i}.txt")
@@ -143,16 +152,22 @@ if Options.lower() == "sign up":
     if newusername in Listed_users:
         print("This username is already taken, please try again and choose a different one")
         quit
-    elif newusername not in Listed_users:
+    if newusername in banneduserlist:
+        print("This username is banned, please try a different one")
+    elif newusername not in Listed_users and newusername not in banneduserlist:
         newpassword = input("Enter new password: ")
         h = sha256()
         h.update(f'{newpassword}'.encode('utf-8'))
         hashed_newpassword = h.hexdigest()
         newaccount = (f"{newusername},{hashed_newpassword}")
-        users = open("users.txt", "a+")
+        users = open("users.txt", "r")
         if users == "":
+            users.close()
             print("Program not set up yet, use setup command first")
+            quit
         elif users != "":
+            users.close()
+            users = open("users.txt", "a")
             users.write(f",{newaccount}")
             users.close
             print(f"You have created an account, {newusername}!")
@@ -163,6 +178,7 @@ if Options.lower() == "sign up":
 if Options.lower() == "setup":
         if "" not in Listed_users:
             print("Login already set up, you cannot use it again...")
+            user_incorrect_block = True
         elif "" in Listed_users:
             print(Fore.RED + "Setup procedure...")
             print("User for setup added with username setup and password setup!")
