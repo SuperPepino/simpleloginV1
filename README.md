@@ -1,4 +1,4 @@
-# loginshit
+# Simple Login
 
 A simple backend login system including a mailing system and multiple access levels.
 

@@ -126,10 +126,15 @@ while active == True:
                         mailbox.write("")
                 if maildeletion.upper() == "N":
                     print("mail kept")
+    elif activity == "changelog":
+        Changelogopen = open("Changelog.md", "r")
+        Changelogread = Changelogopen.read
+        print(Changelogread)
     elif activity == "help":
         print(Fore.CYAN + "message = Send a message to a different user\nreadmail = Read the mail other people have sent to you\npromote = promote a different user to give them more clearance\ndeleteaccount = delete your account\nquit = Close the application" + Fore.RESET)
     elif activity == "quit":
         break
+    
 
 if Options.lower() == "sign up":
     newusername = input("Enter new username: ")
@@ -146,6 +151,8 @@ if Options.lower() == "sign up":
         users.write(f",{newaccount}")
         users.close
         print(f"You have created an account, {newusername}!")
+
+
 
 if Options.lower() == "setup":
         if "" not in Listed_users:
