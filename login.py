@@ -145,6 +145,30 @@ while active == True:
         print(Fore.CYAN + "message = Send a message to a different user\nreadmail = Read the mail other people have sent to you\npromote = promote a different user to give them more clearance\ndeleteaccount = delete your account\nquit = Close the application" + Fore.RESET)
     elif activity == "quit":
         break
+    elif activity == "ban":
+        banrecipient = input("Put username you want to ban here: ")
+        if banrecipient in bannedusers:
+            print("User already banned...")
+            quit()
+        elif banrecipient not in bannedusers:
+            if banrecipient in Listed_users:
+                banwrite =  open("bannedusers.txt", "a")
+                banwrite.write(f"{banrecipient},")
+                for i in range(len(Listed_users)):
+                    bannednumber = Listed_users[i]
+                    hashedbannedpassword = Listed_passwords[i]
+                    if banrecipient == Listed_users[i]:
+                        os.remove(f"user_{i+1}.txt")
+                        os.remove(f"mailbox_{banrecipient}.txt")
+                        newuserslist = Userslist.replace(f"{banrecipient},{hashedbannedpassword},", "")
+                        with open("users.txt", "w") as edituserslist:
+                            edituserslist.write(f"newuserslist")
+                            print(Fore.RED + f"User {banrecipient} banned" + Fore.RESET)
+                        if bannednumber < i+1:
+                          os.rename(f"user_{i+1}.txt", f"user_{i}.txt")
+            else:
+                print("User does not exist")
+
     
 
 if Options.lower() == "sign up":
@@ -154,6 +178,7 @@ if Options.lower() == "sign up":
         quit
     if newusername in banneduserlist:
         print("This username is banned, please try a different one")
+        user_incorrect_block = True
     elif newusername not in Listed_users and newusername not in banneduserlist:
         newpassword = input("Enter new password: ")
         h = sha256()
@@ -189,7 +214,7 @@ if Options.lower() == "setup":
             h = sha256()
             h.update(f'{newpassword}'.encode('utf-8'))
             hashed_newpassword = h.hexdigest()
-            newaccount = (f"{newusername},{hashed_newpassword}")
+            newaccount = (f"{newusername},{hashed_newpassword},")
             users = open("users.txt", "a")
             users.write(f"{newaccount}")
             users.close
