@@ -23,8 +23,8 @@ Extracted_Data = Userslist.split(",")
 Listed_users = Extracted_Data[0::2]
 Listed_passwords = Extracted_Data[1::2]
 
-Options = input("log in or sign up? : ")
-if Options.lower() == "log in":
+Options = input("log in or sign up? : ").strip().lower()
+if Options == "log in":
     username = input("Enter your username: ")
     password = input("Enter password: ")
     users.close()
@@ -171,7 +171,7 @@ while active == True:
 
     
 
-if Options.lower() == "sign up":
+if Options == "sign up":
     newusername = input("Enter new username: ")
     if newusername in Listed_users:
         print("This username is already taken, please try again and choose a different one")
@@ -200,7 +200,7 @@ if Options.lower() == "sign up":
 
 
 
-if Options.lower() == "setup":
+if Options == "setup":
         if "" not in Listed_users:
             print("Login already set up, you cannot use it again...")
             user_incorrect_block = True
