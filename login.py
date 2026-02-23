@@ -7,7 +7,7 @@ logged_in = False
 active = False
 message_shown = False
 User_found = False
-user_incorrect_block = False
+user_incorrect_block = True
 
 bannedusers = open("bannedusers.txt", "a")
 bannedusers.close()
@@ -36,6 +36,8 @@ if Options == "log in":
             logged_in = True
             ActiveUser = (i+1)
             print(f"Welcome {username}!")
+        else:
+            user_incorrect_block = False
 
 if logged_in == True:
     adddefaultperms = open(f"user_{ActiveUser}.txt", "a")
@@ -47,14 +49,15 @@ if logged_in == True:
                 adddefaultperms.write("canmessage,canread")
     if username == "setup":
         print(Fore.RED + "!Do not forget to delete your setup user!" + Fore.RESET)
+    user_incorrect_block = True
     active = True
 
 while active == True:
     message_shown = False
     if {username} != "setup":
-        with  open(f"mailbox_{username}.txt", "a+") as mailcheck:
-            mailbox = mailcheck.read()
-            if len(mailbox) > 0:
+        with  open(f"mailbox_{username}.txt", "r") as mailbox:
+            maillen = mailbox.read()
+            if maillen != "":
                 print(Fore.CYAN + "You have new mail!" + Fore.RESET)
     activity = input(f"What do you want to do today? [help for a list of commands] ")
     if activity == "promote":
@@ -178,7 +181,7 @@ if Options == "sign up":
         quit
     if newusername in banneduserlist:
         print("This username is banned, please try a different one")
-        user_incorrect_block = True
+        quit
     elif newusername not in Listed_users and newusername not in banneduserlist:
         newpassword = input("Enter new password: ")
         h = sha256()
@@ -196,7 +199,7 @@ if Options == "sign up":
             users.write(f",{newaccount}")
             users.close
             print(f"You have created an account, {newusername}!")
-        user_incorrect_block = True
+        quit
 
 
 
@@ -214,7 +217,7 @@ if Options == "setup":
             h = sha256()
             h.update(f'{newpassword}'.encode('utf-8'))
             hashed_newpassword = h.hexdigest()
-            newaccount = (f"{newusername},{hashed_newpassword},")
+            newaccount = (f"{newusername},{hashed_newpassword}")
             users = open("users.txt", "a")
             users.write(f"{newaccount}")
             users.close
