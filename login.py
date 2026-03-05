@@ -2,6 +2,7 @@ setupused = False
 from hashlib import sha256
 from colorama import Fore, Back, Style
 import os
+import time
 
 logged_in = False
 active = False
@@ -22,6 +23,7 @@ users.close()
 Extracted_Data = Userslist.split(",")
 Listed_users = Extracted_Data[0::2]
 Listed_passwords = Extracted_Data[1::2]
+
 
 Options = input("log in or sign up? : ").strip().lower()
 if Options == "log in":
@@ -55,7 +57,7 @@ if logged_in == True:
 while active == True:
     message_shown = False
     if {username} != "setup":
-        with  open(f"mailbox_{username}.txt", "r") as mailbox:
+        with open(f"mailbox_{username}.txt", "a+") as mailbox:
             maillen = mailbox.read()
             if maillen != "":
                 print(Fore.CYAN + "You have new mail!" + Fore.RESET)
@@ -68,16 +70,23 @@ while active == True:
             for i in range(len(Listed_users)):
                 if target == Listed_users[i]:
                     promotiontarget = i+1
-                    promotion_level = input("Enter targets new access level: ")
+                    promotion_level = input("Enter targets new access level [1-5]: ")
                     promotion_level = int(promotion_level)
                     if promotion_level == 1:
                         promotionnewaccesslevel = "canmessage,canread"
-                    if promotion_level == 10:
+                    if promotion_level == 2:
+                        promotionnewaccesslevel = "canmessage, canread"
+                    if promotion_level == 3:
+                        promotionnewaccesslevel = "canmessage, canread"
+                    if promotion_level == 4:
+                        promotionnewaccesslevel = "canmessage, canread"
+                    if promotion_level == 5:
                         promotionnewaccesslevel = "canmessage,canread,canpromote"
                     confirmation = input(f"Are you sure you want to promote {target} to level {promotion_level}? [" + Fore.GREEN + "Y" + Fore.RESET + "/" + Fore.RED + "N" + Fore.RESET + "]")
                     if confirmation.upper() == "Y":
                         with open(f"user_{promotiontarget}.txt", "w+") as promotion:
                             promotion.write(f"{promotionnewaccesslevel}")
+                    print(Fore.GREEN + "Success, " + Fore.RESET + f"{target} has been promoted to access level {promotion_level}")
     elif activity.lower() == "deleteaccount":
         if username == "setup":
             os.remove("user_1.txt")
@@ -145,14 +154,15 @@ while active == True:
         Changelogread = Changelogopen.read
         print(Changelogread)
     elif activity == "help":
-        print(Fore.CYAN + "message = Send a message to a different user\nreadmail = Read the mail other people have sent to you\npromote = promote a different user to give them more clearance\ndeleteaccount = delete your account\nquit = Close the application" + Fore.RESET)
+        Commands = open("Commands.txt", "r")
+        Commandread = Commands.read
+        print(Fore.CYAN + Commandread + Fore.RESET)
     elif activity == "quit":
-        break
+        active = False
     elif activity == "ban":
         banrecipient = input("Put username you want to ban here: ")
         if banrecipient in bannedusers:
             print("User already banned...")
-            quit()
         elif banrecipient not in bannedusers:
             if banrecipient in Listed_users:
                 banwrite =  open("bannedusers.txt", "a")
@@ -178,10 +188,8 @@ if Options == "sign up":
     newusername = input("Enter new username: ")
     if newusername in Listed_users:
         print("This username is already taken, please try again and choose a different one")
-        quit
     if newusername in banneduserlist:
         print("This username is banned, please try a different one")
-        quit
     elif newusername not in Listed_users and newusername not in banneduserlist:
         newpassword = input("Enter new password: ")
         h = sha256()
@@ -192,14 +200,12 @@ if Options == "sign up":
         if users == "":
             users.close()
             print("Program not set up yet, use setup command first")
-            quit
         elif users != "":
             users.close()
             users = open("users.txt", "a")
             users.write(f",{newaccount}")
             users.close
             print(f"You have created an account, {newusername}!")
-        quit
 
 
 
@@ -209,8 +215,20 @@ if Options == "setup":
             user_incorrect_block = True
         elif "" in Listed_users:
             print(Fore.RED + "Setup procedure...")
-            print("User for setup added with username setup and password setup!")
-            print("! Dont forget to delete setup user so you to avoid security risks !")
+            time.sleep(2)
+            print("Writing files for setup")
+            time.sleep(4)
+            with open("Commands.txt", "w") as writehelp:
+                writehelp.write(
+                    "message = Send a message to a different user\n"
+                    "readmail = Read the mail other people have sent to you\n"
+                    "changelog = Shows the changelog\n"
+                    "promote = promote a different user to give them more clearance\n"
+                    "ban = Bans a username from an account being created with it\n"
+                    "deleteaccount = delete your account\n"
+                    "quit = Close the application"
+                )
+            time.sleep(1)
             user_incorrect_block = True
             newusername = "setup"
             newpassword = "setup"
@@ -225,6 +243,9 @@ if Options == "setup":
                 if addsetupperms.read().strip() == "":
                     with open(f"user_1.txt", "w") as addsetupperms:
                         addsetupperms.write("canpromote")
+            time.sleep(2)
+            print("User for setup added with username setup and password setup!")
+            print("! Dont forget to delete setup user so you to avoid security risks !")
 
 if user_incorrect_block is False:
     print("Username or password incorrect! Try again...")
