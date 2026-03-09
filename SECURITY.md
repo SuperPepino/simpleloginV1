@@ -10,4 +10,4 @@ Please report any security issues you find to me...
 
 ## Reporting a Vulnerability
 
-Dm me on discord @cmdmean
+Dm me on discord @pepinofnr
