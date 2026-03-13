@@ -62,6 +62,7 @@ while active == True:
             if maillen != "":
                 print(Fore.CYAN + "You have new mail!" + Fore.RESET)
     activity = input(f"What do you want to do today? [help for a list of commands] ")
+
     if activity == "promote":
         checkpermissions = open(f"user_{ActiveUser}.txt", "r")
         checkpermissions = checkpermissions.read()
@@ -73,20 +74,21 @@ while active == True:
                     promotion_level = input("Enter targets new access level [1-5]: ")
                     promotion_level = int(promotion_level)
                     if promotion_level == 1:
-                        promotionnewaccesslevel = "canmessage,canread"
+                        promotionnewaccesslevel = "canread"
                     if promotion_level == 2:
-                        promotionnewaccesslevel = "canmessage, canread"
+                        promotionnewaccesslevel = "canmessage,canread"
                     if promotion_level == 3:
-                        promotionnewaccesslevel = "canmessage, canread"
+                        promotionnewaccesslevel = "canmessage,canread,canbanusername"
                     if promotion_level == 4:
-                        promotionnewaccesslevel = "canmessage, canread"
+                        promotionnewaccesslevel = "canmessage,canread,canunbanusername,canbanusername,canban"
                     if promotion_level == 5:
-                        promotionnewaccesslevel = "canmessage,canread,canpromote"
+                        promotionnewaccesslevel = "canmessage,canread,canunbanusername,canbanusername,canban,canpromote"
                     confirmation = input(f"Are you sure you want to promote {target} to level {promotion_level}? [" + Fore.GREEN + "Y" + Fore.RESET + "/" + Fore.RED + "N" + Fore.RESET + "]")
                     if confirmation.upper() == "Y":
                         with open(f"user_{promotiontarget}.txt", "w+") as promotion:
                             promotion.write(f"{promotionnewaccesslevel}")
                     print(Fore.GREEN + "Success, " + Fore.RESET + f"{target} has been promoted to access level {promotion_level}")
+
     elif activity.lower() == "deleteaccount":
         if username == "setup":
             os.remove("user_1.txt")
@@ -121,6 +123,7 @@ while active == True:
             if confirmation.upper() == "N":
                 print("account deletion cancelled")
             break
+
     elif activity.lower() == "message":
         checkpermissions = open(f"user_{ActiveUser}.txt", "r")
         checkpermissions = checkpermissions.read()
@@ -135,6 +138,7 @@ while active == True:
                 if recipient not in Listed_users and message_shown == False:
                     message_shown = True
                     print("User does not exist")
+
     elif activity == "readmail":
         checkpermissions = open(f"user_{ActiveUser}.txt", "r")
         checkpermissions = checkpermissions.read()
@@ -149,38 +153,72 @@ while active == True:
                         mailbox.write("")
                 if maildeletion.upper() == "N":
                     print("mail kept")
+
     elif activity == "changelog":
         Changelogopen = open("Changelog.md", "r")
         Changelogread = Changelogopen.read
         print(Changelogread)
+
     elif activity == "help":
         Commands = open("Commands.txt", "r")
         Commandread = Commands.read
         print(Fore.CYAN + Commandread + Fore.RESET)
+    
     elif activity == "quit":
         active = False
+
     elif activity == "ban":
-        banrecipient = input("Put username you want to ban here: ")
-        if banrecipient in bannedusers:
-            print("User already banned...")
-        elif banrecipient not in bannedusers:
-            if banrecipient in Listed_users:
+        with open(f"user_{ActiveUser}.txt", "r") as f:
+            checkpermissions = f.read()
+        if "canban" in checkpermissions:
+            banrecipient = input("Put username you want to ban here: ")
+            if banrecipient in bannedusers:
+                print("User already banned...")
+            elif banrecipient not in bannedusers:
+                if banrecipient in Listed_users:
+                    banwrite =  open("bannedusers.txt", "a")
+                    banwrite.write(f"{banrecipient},")
+                    for i in range(len(Listed_users)):
+                        bannednumber = i
+                        hashedbannedpassword = Listed_passwords[i]
+                        if banrecipient == Listed_users[i]:
+                            os.remove(f"user_{i+1}.txt")
+                            open(f"mailbox_{banrecipient}.txt", "a").close
+                            os.remove(f"mailbox_{banrecipient}.txt")
+                            newuserslist = Userslist.replace(f"{banrecipient},{hashedbannedpassword},", "")
+                            with open("users.txt", "w") as edituserslist:
+                                edituserslist.write(f"{newuserslist}")
+                                print(Fore.RED + f"User {banrecipient} banned" + Fore.RESET)
+                            if bannednumber < i+1:
+                                os.rename(f"user_{i+1}.txt", f"user_{i}.txt")
+                else:
+                    print("User not found")
+
+    elif activity == "banusername":
+        checkpermissions = open(f"user_{ActiveUser}.txt", "r")
+        checkpermissions = checkpermissions.read()
+        if "canbanusername" in checkpermissions:
+            banrecipient = input("Put username you want to ban here: ")
+            if banrecipient in bannedusers:
+                print("User already banned...")
+            elif banrecipient not in bannedusers:
                 banwrite =  open("bannedusers.txt", "a")
                 banwrite.write(f"{banrecipient},")
-                for i in range(len(Listed_users)):
-                    bannednumber = Listed_users[i]
-                    hashedbannedpassword = Listed_passwords[i]
-                    if banrecipient == Listed_users[i]:
-                        os.remove(f"user_{i+1}.txt")
-                        os.remove(f"mailbox_{banrecipient}.txt")
-                        newuserslist = Userslist.replace(f"{banrecipient},{hashedbannedpassword},", "")
-                        with open("users.txt", "w") as edituserslist:
-                            edituserslist.write(f"newuserslist")
-                            print(Fore.RED + f"User {banrecipient} banned" + Fore.RESET)
-                        if bannednumber < i+1:
-                          os.rename(f"user_{i+1}.txt", f"user_{i}.txt")
             else:
-                print("User does not exist")
+                print("User not found")
+
+    elif activity == "unbanusername":
+        checkpermissions = open(f"user_{ActiveUser}.txt", "r")
+        checkpermissions = checkpermissions.read()
+        if "canunbanusername" in checkpermissions:
+            unbanrecipient = input("Put username you want to unban here: ")
+            if unbanrecipient in bannedusers:
+                newbannedusers = banneduserlist.replace(f"{unbanrecipient}, ", "")
+                with open("bannedusers.txt", "w") as edituserslist:
+                    edituserslist.write(newbannedusers)
+                print(Fore.GREEN + f"Username {unbanrecipient} has been unbanned" + Fore.RESET)
+            elif unbanrecipient not in bannedusers:
+                print("Username is not banned")
 
     
 
@@ -224,7 +262,9 @@ if Options == "setup":
                     "readmail = Read the mail other people have sent to you\n"
                     "changelog = Shows the changelog\n"
                     "promote = promote a different user to give them more clearance\n"
-                    "ban = Bans a username from an account being created with it\n"
+                    "banusername = Bans a username from an account being created with it\n"
+                    "unbanusername = Unbans a username from an account being created with it\n"
+                    "ban = Bans a username from an account being created with it and deletes current user with that name\n"
                     "deleteaccount = delete your account\n"
                     "quit = Close the application"
                 )
