@@ -1,9 +1,0 @@
-message = Send a message to a different user
-readmail = Read the mail other people have sent to you
-changelog = Shows the changelog
-promote = promote a different user to give them more clearance
-banusername = Bans a username from an account being created with it
-unbanusername = Unbans a username from an account being created with it
-ban = Bans a username from an account being created with it and deletes current user with that name
-deleteaccount = delete your account
-quit = Close the application

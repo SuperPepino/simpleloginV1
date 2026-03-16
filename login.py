@@ -189,8 +189,11 @@ while active == True:
                             with open("users.txt", "w") as edituserslist:
                                 edituserslist.write(f"{newuserslist}")
                                 print(Fore.RED + f"User {banrecipient} banned" + Fore.RESET)
-                            if bannednumber < i+1:
-                                os.rename(f"user_{i+1}.txt", f"user_{i}.txt")
+                            for j in range(i+1, len(Listed_users)):
+                                old = f"user_{j+1}.txt"
+                                new = f"user_{j}.txt"
+                                if os.path.exists(old):
+                                    os.rename(old, new)
                 else:
                     print("User not found")
 
