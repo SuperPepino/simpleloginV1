@@ -238,7 +238,7 @@ if Options == "sign up":
         h = sha256()
         h.update(f'{newpassword}'.encode('utf-8'))
         hashed_newpassword = h.hexdigest()
-        newaccount = (f"{newusername},{hashed_newpassword}")
+        newaccount = (f"{newusername},{hashed_newpassword},")
         users = open("users.txt", "r")
         if users == "":
             users.close()
@@ -246,7 +246,7 @@ if Options == "sign up":
         elif users != "":
             users.close()
             users = open("users.txt", "a")
-            users.write(f",{newaccount}")
+            users.write(f"{newaccount}")
             users.close
             print(f"You have created an account, {newusername}!")
 
@@ -280,7 +280,7 @@ if Options == "setup":
             h = sha256()
             h.update(f'{newpassword}'.encode('utf-8'))
             hashed_newpassword = h.hexdigest()
-            newaccount = (f"{newusername},{hashed_newpassword}")
+            newaccount = (f"{newusername},{hashed_newpassword},")
             users = open("users.txt", "a")
             users.write(f"{newaccount}")
             users.close
