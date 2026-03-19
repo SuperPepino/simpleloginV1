@@ -58,10 +58,11 @@ while active == True:
     message_shown = False
     if {username} != "setup":
         with open(f"mailbox_{username}.txt", "a+") as mailbox:
+            mailbox.seek(0)
             maillen = mailbox.read()
             if maillen != "":
                 print(Fore.CYAN + "You have new mail!" + Fore.RESET)
-    activity = input(f"What do you want to do today? [help for a list of commands] ")
+    activity = input(Fore.BLUE + f"What do you want to do today? [help for a list of commands] " + Fore.RESET)
 
     if activity == "promote":
         checkpermissions = open(f"user_{ActiveUser}.txt", "r")
@@ -135,6 +136,7 @@ while active == True:
                     messagesending = open(f"mailbox_{recipient}.txt", "a")
                     messagesending.write(f"{message}\n")
                     messagesending.close
+                    print(Fore.GREEN + "Message sent" + Fore.RESET)
                 if recipient not in Listed_users and message_shown == False:
                     message_shown = True
                     print("User does not exist")
