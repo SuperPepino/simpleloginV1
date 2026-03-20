@@ -4,7 +4,6 @@
   <img src="https://via.placeholder.com/1200x300?text=Python+Login+System" width="100%" />
 </p>
 
-<<<<<<< HEAD
 <p align="center">
   <b>Simple file-based authentication system with messaging, permissions, and moderation.</b>
 </p>
@@ -154,4 +153,3 @@ Currently 5 access levels, level 1 for normal, level 2 for verified users, level
 Use setup instead of login to set it up and use the setup user to promote your own account to clearance level 5 to be able to use it yourself.
 
 I will try to update this program once in a while so I have a changelog aswel.
->>>>>>> 3409172d59c10146e8aadb3e4a744d582d83a887
