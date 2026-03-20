@@ -91,11 +91,12 @@ At startup, choose:
 | Command         | Description                          |
 | --------------- | ------------------------------------ |
 | `help`          | Show all commands                    |
-| `message`       | Send a message to a user                       |
+| `date/time`     | Shows the current date and time      |
+| `message`       | Send a message to a user             |
 | `readmail`      | Read your mailbox                    |
 | `promote`       | Promote a user (requires permission) |
 | `ban`           | Ban a user                           |
-| `banusername`           | Ban a username from use for a new account                           |
+| `banusername`   | Ban a username from use for a new account |
 | `deleteaccount` | Delete your account                  |
 | `changelog`     | View changes                         |
 | `quit`          | Exit the program                     |

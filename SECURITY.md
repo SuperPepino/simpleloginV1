@@ -9,5 +9,5 @@ Please report any security issues you find to me...
 | 1.0     | :white_check_mark: |
 
 ## Reporting a Vulnerability
-
-Dm me on discord @pepinofnr
+- Creating a github issue
+- Dm me on discord @pepinofnr

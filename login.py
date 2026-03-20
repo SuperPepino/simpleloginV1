@@ -3,6 +3,7 @@ from hashlib import sha256
 from colorama import Fore, Back, Style
 import os
 import time
+from datetime import datetime
 
 def load_users():
     with open("users.txt", "r") as users:
@@ -20,6 +21,7 @@ Loop = True
 LoginCheck = False
 found = False
 
+datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 bannedusers = open("bannedusers.txt", "a")
 bannedusers.close()
 bannedusers = open("bannedusers.txt", "r")
@@ -83,7 +85,10 @@ while Loop == True:
         message_shown = False
         activity = input(Fore.BLUE + f"What do you want to do today? [help for a list of commands] " + Fore.RESET)
 
-        if activity == "promote":
+        if activity.lower() == "time" or activity.lower() == "date":
+            print(f"The current time is {datetime}")
+
+        elif activity.lower() == "promote":
             checkpermissions = open(f"user_{ActiveUser}.txt", "r")
             checkpermissions = checkpermissions.read()
             if "canpromote" in checkpermissions:
@@ -153,14 +158,14 @@ while Loop == True:
                     if recipient == Listed_users[i]:
                         message = input("Enter message: ")
                         messagesending = open(f"mailbox_{recipient}.txt", "a")
-                        messagesending.write(f"{message}\n")
+                        messagesending.write(f"{username} [{datetime}] {message}\n")
                         messagesending.close()
                         print(Fore.GREEN + "Message sent" + Fore.RESET)
                     if recipient not in Listed_users and message_shown == False:
                         message_shown = True
                         print("User does not exist")
 
-        elif activity == "readmail":
+        elif activity.lower() == "readmail":
             checkpermissions = open(f"user_{ActiveUser}.txt", "r")
             checkpermissions = checkpermissions.read()
             if "canread" in checkpermissions:
@@ -175,21 +180,21 @@ while Loop == True:
                     if maildeletion.upper() == "N":
                         print("mail kept")
 
-        elif activity == "changelog":
+        elif activity.lower() == "changelog":
             Changelogopen = open("Changelog.md", "r")
             Changelogread = Changelogopen.read()
             print(Changelogread)
 
-        elif activity == "help":
+        elif activity.lower() == "help":
             Commands = open("Commands.txt", "r")
             Commandread = Commands.read()
             print(Fore.CYAN + Commandread + Fore.RESET)
         
-        elif activity == "quit":
+        elif activity.lower() == "quit":
             logged_in = False
             active = False
 
-        elif activity == "ban":
+        elif activity.lower() == "ban":
             with open(f"user_{ActiveUser}.txt", "r") as f:
                 checkpermissions = f.read()
             if "canban" in checkpermissions:
@@ -220,7 +225,7 @@ while Loop == True:
                     else:
                         print("User not found")
 
-        elif activity == "banusername":
+        elif activity.lower() == "banusername":
             checkpermissions = open(f"user_{ActiveUser}.txt", "r")
             checkpermissions = checkpermissions.read()
             if "canbanusername" in checkpermissions:
@@ -233,7 +238,7 @@ while Loop == True:
                 else:
                     print("User not found")
 
-        elif activity == "unbanusername":
+        elif activity.lower() == "unbanusername":
             checkpermissions = open(f"user_{ActiveUser}.txt", "r")
             checkpermissions = checkpermissions.read()
             if "canunbanusername" in checkpermissions:
@@ -284,6 +289,7 @@ while Loop == True:
                 print("Writing files for setup")
                 with open("Commands.txt", "w") as writehelp:
                     writehelp.write(
+                        "time/date = Shows the current date and time\n"
                         "message = Send a message to a different user\n"
                         "readmail = Read the mail other people have sent to you\n"
                         "changelog = Shows the changelog\n"
