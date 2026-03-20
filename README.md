@@ -1,5 +1,3 @@
-# 🐍 Python Login System
-
 <p align="center">
   <img src="https://placehold.co/1200x300/0f172a/ffffff?text=Python+Login+System&font=montserrat" />
 </p>
