@@ -1,7 +1,7 @@
 # 🐍 Python Login System
 
 <p align="center">
-  <img src="https://via.placeholder.com/1200x300?text=Python+Login+System" width="100%" />
+  <img src="https://placehold.co/1200x300/0f172a/ffffff?text=Python+Login+System&font=montserrat" />
 </p>
 
 <p align="center">
