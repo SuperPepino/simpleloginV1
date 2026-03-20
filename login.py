@@ -30,7 +30,7 @@ Listed_passwords = Extracted_Data[1::2]
 while Loop == True:
     if not logged_in:
         Options = input("log in or sign up? : ").strip().lower()
-        if Options == "log in":
+        if Options == "log in" or Options == "login":
             username = input("Enter your username: ")
             password = input("Enter password: ")
             users.close()
@@ -41,10 +41,12 @@ while Loop == True:
                 if username == Listed_users[i] and hashedpassword == Listed_passwords[i]:
                     logged_in = True
                     LoginCheck = True
+                    found = True
                     ActiveUser = (i+1)
+                    user_incorrect_block = True
                     print(f"Welcome {username}!")
                     break
-                else:
+                if not found:
                     user_incorrect_block = False
 
     if LoginCheck == True:
@@ -235,7 +237,7 @@ while Loop == True:
 
         
 
-    if Options == "sign up":
+    if Options == "sign up" or Options == "signup":
         newusername = input("Enter new username: ")
         if newusername in Listed_users:
             print("This username is already taken, please try again and choose a different one")
