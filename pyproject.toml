@@ -1,0 +1,16 @@
+[project]
+name = "simple-login-system"
+version = "0.1.0"
+description = "Simple login script"
+readme = "README.md"
+authors = [{ name = "Pepino" }]
+license = { file = "LICENCE.txt" }
+requires-python = ">=3.8"
+dependencies = ["colorama"]
+
+[project.scripts]
+simplelogin = "simplelogin.login:main"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"

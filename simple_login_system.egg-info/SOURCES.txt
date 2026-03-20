@@ -1,0 +1,11 @@
+LICENCE.txt
+README.md
+pyproject.toml
+simple_login_system.egg-info/PKG-INFO
+simple_login_system.egg-info/SOURCES.txt
+simple_login_system.egg-info/dependency_links.txt
+simple_login_system.egg-info/entry_points.txt
+simple_login_system.egg-info/requires.txt
+simple_login_system.egg-info/top_level.txt
+simplelogin/__init__.py
+simplelogin/login.py
