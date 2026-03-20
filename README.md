@@ -4,6 +4,7 @@
   <img src="https://via.placeholder.com/1200x300?text=Python+Login+System" width="100%" />
 </p>
 
+<<<<<<< HEAD
 <p align="center">
   <b>Simple file-based authentication system with messaging, permissions, and moderation.</b>
 </p>
@@ -147,3 +148,10 @@ This project is free to use for **educational purposes**.
   Made with 💻 and learning in mind.<br>
   If you like it, consider ⭐ starring the repo!
 </p>
+=======
+Currently 5 access levels, level 1 for normal, level 2 for verified users, level 3 for moderators, level 4 for lead moderators and level 5 for admins
+
+Use setup instead of login to set it up and use the setup user to promote your own account to clearance level 5 to be able to use it yourself.
+
+I will try to update this program once in a while so I have a changelog aswel.
+>>>>>>> 3409172d59c10146e8aadb3e4a744d582d83a887
