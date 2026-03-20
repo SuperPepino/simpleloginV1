@@ -4,6 +4,13 @@ from colorama import Fore, Back, Style
 import os
 import time
 
+def load_users():
+    with open("users.txt", "r") as users:
+        data = users.read()
+
+    extracted = data.split(",")
+    return extracted[0::2], extracted[1::2]
+
 logged_in = False
 active = False
 message_shown = False
@@ -11,6 +18,7 @@ User_found = False
 user_incorrect_block = True
 Loop = True
 LoginCheck = False
+found = False
 
 bannedusers = open("bannedusers.txt", "a")
 bannedusers.close()
@@ -29,6 +37,7 @@ Listed_passwords = Extracted_Data[1::2]
 
 while Loop == True:
     if not logged_in:
+        Listed_users, Listed_passwords = load_users()
         Options = input("log in or sign up? : ").strip().lower()
         if Options == "log in" or Options == "login":
             username = input("Enter your username: ")
@@ -37,6 +46,7 @@ while Loop == True:
             h = sha256()
             h.update(f'{password}'.encode('utf-8'))
             hashedpassword = h.hexdigest()
+            found = False
             for i in range(len(Listed_passwords)):
                 if username == Listed_users[i] and hashedpassword == Listed_passwords[i]:
                     logged_in = True
@@ -46,8 +56,8 @@ while Loop == True:
                     user_incorrect_block = True
                     print(f"Welcome {username}!")
                     break
-                if not found:
-                    user_incorrect_block = False
+            if not found:
+                user_incorrect_block = False
 
     if LoginCheck == True:
         adddefaultperms = open(f"user_{ActiveUser}.txt", "a")
@@ -172,7 +182,7 @@ while Loop == True:
 
         elif activity == "help":
             Commands = open("Commands.txt", "r")
-            Commandread = Commands.read
+            Commandread = Commands.read()
             print(Fore.CYAN + Commandread + Fore.RESET)
         
         elif activity == "quit":
@@ -201,6 +211,7 @@ while Loop == True:
                                 with open("users.txt", "w") as edituserslist:
                                     edituserslist.write(f"{newuserslist}")
                                     print(Fore.RED + f"User {banrecipient} banned" + Fore.RESET)
+                                    Listed_users, Listed_passwords = load_users()
                                 for j in range(i+1, len(Listed_users)):
                                     old = f"user_{j+1}.txt"
                                     new = f"user_{j}.txt"
@@ -249,16 +260,17 @@ while Loop == True:
             h.update(f'{newpassword}'.encode('utf-8'))
             hashed_newpassword = h.hexdigest()
             newaccount = (f"{newusername},{hashed_newpassword},")
-            users = open("users.txt", "r")
-            if users == "":
-                users.close()
-                print("Program not set up yet, use setup command first")
-            elif users != "":
-                users.close()
-                users = open("users.txt", "a")
-                users.write(f"{newaccount}")
-                users.close()
-                print(f"You have created an account, {newusername}!")
+            with open("users.txt", "r") as f:
+                if f.read() == "":
+                    users.close()
+                    print("Program not set up yet, use setup command first")
+                elif users != "":
+                    users.close()
+                    users = open("users.txt", "a")
+                    users.write(f"{newaccount}")
+                    users.close()
+                    print(f"You have created an account, {newusername}!")
+                    Listed_users, Listed_passwords = load_users()
 
 
 
@@ -304,6 +316,7 @@ while Loop == True:
                 time.sleep(2)
                 print("User for setup added with username setup and password setup!")
                 print("! Dont forget to delete setup user so you to avoid security risks !" + Fore.RESET)
+                Listed_users, Listed_passwords = load_users()
 
     if user_incorrect_block is False:
         print("Username or password incorrect! Try again...")
