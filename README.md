@@ -135,6 +135,11 @@ When a user is banned:
 All contributions are welcome.
 
 ---
+## 🤖 AI declaration
+
+Used copilot for deployment to PyPi and chatgpt for simple bug fixes early on
+
+---
 
 ## 📄 License
 
