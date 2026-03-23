@@ -65,14 +65,14 @@ setup
 This will:
 
 - Create a default admin account  
-- Grant admin permissions  
+- Grant admin promotion permissions
 
 **Default credentials:**
 
 - Username: `setup`  
 - Password: `setup`  
 
-⚠️ **Important:** Delete this account after creating your own admin account.
+⚠️ **Important:** Delete this account after creating your own admin account and give it perms.
 
 ---
 
@@ -96,7 +96,7 @@ At startup, choose:
 | `readmail`      | Read your mailbox                    |
 | `promote`       | Promote a user (requires permission) |
 | `ban`           | Ban a user                           |
-| `banusername`   | Ban a username from use for a new account |
+| `blacklist`     | Blacklists a username from use for a new account |
 | `deleteaccount` | Delete your account                  |
 | `changelog`     | View changes                         |
 | `quit`          | Exit the program                     |
@@ -117,12 +117,12 @@ When a user is banned:
 
 ## 🔮 Planned Features
 
-- Improved security (salted hashing, validation)  
-- Better error handling  
-- Cleaner code structure  
-- Database support (SQLite)  
-- Logging system  
-- Admin tools / interface  
+- Improved security (salted hashing, validation)
+- Better error handling
+- Cleaner code structure
+- Database support (SQLite)
+- Logging system
+- Admin tools / interface
 
 ---
 
@@ -137,7 +137,7 @@ All contributions are welcome.
 ---
 ## 🤖 AI declaration
 
-Used copilot for deployment to PyPi and chatgpt for simple bug fixes early on
+Used copilot for deployment to PyPi and chatgpt for simple bug fixes early on and for writing part of the ReadMe
 
 ---
 

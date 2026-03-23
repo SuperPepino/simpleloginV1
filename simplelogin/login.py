@@ -13,6 +13,8 @@ def load_users():
     return extracted[0::2], extracted[1::2]
 
 def main():
+    os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    
     logged_in = False
     active = False
     message_shown = False
@@ -83,13 +85,13 @@ def main():
     
         while active == True:
             message_shown = False
-            activity = input(Fore.BLUE + f"What do you want to do today? [help for a list of commands] " + Fore.RESET)
+            activity = input(Fore.BLUE + f"What do you want to do today? [help for a list of commands] " + Fore.RESET).strip().lower()
             current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
             if activity.lower() == "time" or activity.lower() == "date":
                 print(f"The current time is {current_time}")
     
-            elif activity.lower() == "promote":
+            elif activity == "promote":
                 checkpermissions = open(f"user_{ActiveUser}.txt", "r")
                 checkpermissions = checkpermissions.read()
                 if "canpromote" in checkpermissions:
@@ -108,14 +110,14 @@ def main():
                             if promotion_level == 4:
                                 promotionnewaccesslevel = "canmessage,canread,canunbanusername,canbanusername,canban"
                             if promotion_level == 5:
-                                promotionnewaccesslevel = "canmessage,canread,canunbanusername,canbanusername,canban,canpromote"
+                                promotionnewaccesslevel = "canmessage,canread,canunbanusername,canbanusername,canban,canpromote,canclose"
                             confirmation = input(f"Are you sure you want to promote {target} to level {promotion_level}? [" + Fore.GREEN + "Y" + Fore.RESET + "/" + Fore.RED + "N" + Fore.RESET + "]")
                             if confirmation.upper() == "Y":
                                 with open(f"user_{promotiontarget}.txt", "w+") as promotion:
                                     promotion.write(f"{promotionnewaccesslevel}")
                             print(Fore.GREEN + "Success, " + Fore.RESET + f"{target} has been promoted to access level {promotion_level}")
     
-            elif activity.lower() == "deleteaccount":
+            elif activity == "deleteaccount":
                 if username == "setup":
                     os.remove("user_1.txt")
                     for i in range(len(Listed_passwords)):
@@ -150,7 +152,7 @@ def main():
                         print("account deletion cancelled")
                     break
     
-            elif activity.lower() == "message":
+            elif activity == "message":
                 checkpermissions = open(f"user_{ActiveUser}.txt", "r")
                 checkpermissions = checkpermissions.read()
                 if "canmessage" in checkpermissions:
@@ -166,7 +168,7 @@ def main():
                             message_shown = True
                             print("User does not exist")
     
-            elif activity.lower() == "readmail":
+            elif activity == "readmail":
                 checkpermissions = open(f"user_{ActiveUser}.txt", "r")
                 checkpermissions = checkpermissions.read()
                 if "canread" in checkpermissions:
@@ -181,21 +183,36 @@ def main():
                         if maildeletion.upper() == "N":
                             print("mail kept")
     
-            elif activity.lower() == "changelog":
-                Changelogopen = open("Changelog.md", "r")
-                Changelogread = Changelogopen.read()
-                print(Changelogread)
+            elif activity == "changelog":
+                with open("Changelog.md", "r") as changelogread:
+                    Changelogread = changelogread.read()
+                    START = Changelogread.find("#")
+                    END = Changelogread.find("#", START + 1)
+                    print(Fore.LIGHTMAGENTA_EX + Changelogread[START:END] + Fore.RESET)
     
-            elif activity.lower() == "help":
-                Commands = open("Commands.txt", "r")
-                Commandread = Commands.read()
-                print(Fore.CYAN + Commandread + Fore.RESET)
+            elif activity == "help":
+                with open("Commands.txt", "r") as Commands:
+                    Commandread = Commands.read()
+                    print(Fore.CYAN + Commandread + Fore.RESET)
             
-            elif activity.lower() == "quit":
+            elif activity == "logout" or activity == "log out":
                 logged_in = False
                 active = False
     
-            elif activity.lower() == "ban":
+            elif activity == "shutdown":
+                activitycheck = open(f"user_{ActiveUser}.txt", "r")
+                activitycheck = activitycheck.read()
+                if "canclose" in activitycheck:
+                    confirmation = input("Are you sure you want to shutdown the application? [" + Fore.GREEN + "Y" + Fore.RESET + "/" + Fore.RED + "N" + Fore.RESET + "]").strip().upper()
+                    if confirmation == "Y":
+                        print(Fore.RED + "Shutdown initiated..." + Fore.RESET)
+                        time.sleep(2)
+                        print(Fore.BLUE + "Goodbye!" + Fore.RESET)
+                        exit()
+                    if confirmation == "N":
+                        print(Fore.GREEN + "Shutdown cancelled" + Fore.RESET)
+
+            elif activity == "ban":
                 with open(f"user_{ActiveUser}.txt", "r") as f:
                     checkpermissions = f.read()
                 if "canban" in checkpermissions:
@@ -226,7 +243,7 @@ def main():
                         else:
                             print("User not found")
     
-            elif activity.lower() == "banusername":
+            elif activity.lower() == "blacklist":
                 checkpermissions = open(f"user_{ActiveUser}.txt", "r")
                 checkpermissions = checkpermissions.read()
                 if "canbanusername" in checkpermissions:
@@ -239,7 +256,7 @@ def main():
                     else:
                         print("User not found")
     
-            elif activity.lower() == "unbanusername":
+            elif activity == "pardon":
                 checkpermissions = open(f"user_{ActiveUser}.txt", "r")
                 checkpermissions = checkpermissions.read()
                 if "canunbanusername" in checkpermissions:
@@ -281,10 +298,10 @@ def main():
     
     
         if Options == "setup":
-                if "" not in Listed_users:
-                    print("Login already set up, you cannot use it again...")
+                if len(Userslist) != 0:
+                    print(Fore.RED + "Login already set up, you cannot use it again..." + Fore.RESET)
                     user_incorrect_block = True
-                elif "" in Listed_users:
+                elif len(Userslist) == 0:
                     print(Fore.RED + "Setup procedure...")
                     time.sleep(2)
                     print("Writing files for setup")
@@ -295,8 +312,8 @@ def main():
                             "readmail = Read the mail other people have sent to you\n"
                             "changelog = Shows the changelog\n"
                             "promote = promote a different user to give them more clearance\n"
-                            "banusername = Bans a username from an account being created with it\n"
-                            "unbanusername = Unbans a username from an account being created with it\n"
+                            "blacklist = Bans a username from an account being created with it\n"
+                            "pardon = Unbans a username from an account being created with it\n"
                             "ban = Bans a username from an account being created with it and deletes current user with that name\n"
                             "deleteaccount = delete your account\n"
                             "quit = Close the application"
