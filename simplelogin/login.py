@@ -12,9 +12,17 @@ def load_users():
     extracted = data.split(",")
     return extracted[0::2], extracted[1::2]
 
+def load_banned():
+    with open("bannedusers.txt", "r") as bannedusers:
+        data = bannedusers.read()
+
+    extracted = data.split(",")
+    return extracted
+
 def main():
     os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     
+    Options = None
     logged_in = False
     active = False
     message_shown = False
@@ -24,29 +32,30 @@ def main():
     LoginCheck = False
     found = False
 
-    bannedusers = open("bannedusers.txt", "a")
-    bannedusers.close()
-    bannedusers = open("bannedusers.txt", "r")
-    banneduserlist = bannedusers.read()
-    bannedusers = banneduserlist.split(",")
-    users = open("users.txt", "a")
-    users.close()
-    users = open("users.txt", "r")
-    Userslist = users.read()
-    users.close()
-    Extracted_Data = Userslist.split(",")
-    Listed_users = Extracted_Data[0::2]
-    Listed_passwords = Extracted_Data[1::2]
+    with open("Commands.txt", "a") as commands:
+        commands.close()
+    with open("bannedusers.txt", "a") as bannedusers:
+        bannedusers.close()
+    with open("bannedusers.txt", "r") as bannedusers:
+        banneduserlist = bannedusers.read()
+        bannedusers = banneduserlist.split(",")
+    with open("users.txt", "a") as users:
+        users.close()
+    with open ("users.txt", "r") as users:
+        Userslist = users.read()
+        Extracted_Data = Userslist.split(",")
+        Listed_users = Extracted_Data[0::2]
+        Listed_passwords = Extracted_Data[1::2]
 
 
     while Loop == True:
         if not logged_in:
+            Options = None
             Listed_users, Listed_passwords = load_users()
             Options = input("log in or sign up? : ").strip().lower()
             if Options == "log in" or Options == "login":
                 username = input("Enter your username: ")
                 password = input("Enter password: ")
-                users.close()
                 h = sha256()
                 h.update(f'{password}'.encode('utf-8'))
                 hashedpassword = h.hexdigest()
@@ -123,7 +132,6 @@ def main():
                     for i in range(len(Listed_passwords)):
                                 if ActiveUser < i+1:
                                     os.rename(f"user_{i+1}.txt", f"user_{i}.txt")
-                    os.remove("mailbox_setup.txt")
                     newuserslist = Userslist.replace(f"{username},{hashedpassword},", "")
                     with open("users.txt", "w") as edituserslist:
                         edituserslist.write(newuserslist)
@@ -161,7 +169,7 @@ def main():
                         if recipient == Listed_users[i]:
                             message = input("Enter message: ")
                             messagesending = open(f"mailbox_{recipient}.txt", "a")
-                            messagesending.write(f"{username} [{datetime}] {message}\n")
+                            messagesending.write(f"{username} [{current_time}] {message}\n")
                             messagesending.close()
                             print(Fore.GREEN + "Message sent" + Fore.RESET)
                         if recipient not in Listed_users and message_shown == False:
@@ -228,13 +236,14 @@ def main():
                                 hashedbannedpassword = Listed_passwords[i]
                                 if banrecipient == Listed_users[i]:
                                     os.remove(f"user_{i+1}.txt")
-                                    open(f"mailbox_{banrecipient}.txt", "a").close
+                                    open(f"mailbox_{banrecipient}.txt", "a").close()
                                     os.remove(f"mailbox_{banrecipient}.txt")
                                     newuserslist = Userslist.replace(f"{banrecipient},{hashedbannedpassword},", "")
                                     with open("users.txt", "w") as edituserslist:
                                         edituserslist.write(f"{newuserslist}")
                                         print(Fore.RED + f"User {banrecipient} banned" + Fore.RESET)
                                         Listed_users, Listed_passwords = load_users()
+                                    banneduserlist = load_banned()
                                     for j in range(i+1, len(Listed_users)):
                                         old = f"user_{j+1}.txt"
                                         new = f"user_{j}.txt"
@@ -251,8 +260,9 @@ def main():
                     if banrecipient in bannedusers:
                         print("User already banned...")
                     elif banrecipient not in bannedusers:
-                        banwrite =  open("bannedusers.txt", "a")
-                        banwrite.write(f"{banrecipient},")
+                        with open("bannedusers.txt", "a") as banwrite:
+                            banwrite.write(f"{banrecipient},")
+                            banneduserlist = load_banned()
                     else:
                         print("User not found")
     
@@ -262,7 +272,7 @@ def main():
                 if "canunbanusername" in checkpermissions:
                     unbanrecipient = input("Put username you want to unban here: ")
                     if unbanrecipient in bannedusers:
-                        newbannedusers = banneduserlist.replace(f"{unbanrecipient}, ", "")
+                        newbannedusers = banneduserlist.replace(f"{unbanrecipient},", "")
                         with open("bannedusers.txt", "w") as edituserslist:
                             edituserslist.write(newbannedusers)
                         print(Fore.GREEN + f"Username {unbanrecipient} has been unbanned" + Fore.RESET)
@@ -275,7 +285,7 @@ def main():
             newusername = input("Enter new username: ")
             if newusername in Listed_users:
                 print("This username is already taken, please try again and choose a different one")
-            if newusername in banneduserlist:
+            elif newusername in banneduserlist:
                 print("This username is banned, please try a different one")
             elif newusername not in Listed_users and newusername not in banneduserlist:
                 newpassword = input("Enter new password: ")
@@ -284,11 +294,10 @@ def main():
                 hashed_newpassword = h.hexdigest()
                 newaccount = (f"{newusername},{hashed_newpassword},")
                 with open("users.txt", "r") as f:
-                    if f.read() == "":
-                        users.close()
+                    ff = f.read()
+                    if ff == "":
                         print("Program not set up yet, use setup command first")
-                    elif users != "":
-                        users.close()
+                    elif ff != "":
                         users = open("users.txt", "a")
                         users.write(f"{newaccount}")
                         users.close()
@@ -332,7 +341,7 @@ def main():
                     newaccount = (f"{newusername},{hashed_newpassword},")
                     users = open("users.txt", "a")
                     users.write(f"{newaccount}")
-                    users.close
+                    users.close()
                     with open(f"user_1.txt", "a+") as addsetupperms:
                         if addsetupperms.read().strip() == "":
                             with open(f"user_1.txt", "w") as addsetupperms:

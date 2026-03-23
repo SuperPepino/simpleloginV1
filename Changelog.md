@@ -1,8 +1,13 @@
 # Changelog version 0.1.3
+- Did A LOT of random bug fixes
+- Fixed changelog not working on some devices
+- Fixed time system
 - Added time system
 - Fixed ban system
 - Added PyPi deployment support
 - Added unban mechanic
+- Renamed banusername to blacklist to avoid confusion
+- More that I forgot
 
 # Changelog version 0.1.2
 - Improved message system 
