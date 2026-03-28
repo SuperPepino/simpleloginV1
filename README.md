@@ -72,6 +72,12 @@ Run the program and type:
 ```bash
 setup
 ```
+<h1 align="center">
+  <b>!DISCLAIMER!</b>
+  <p>Setup user can only be used for promoting and some default features</p>
+  <p>Make a different user and promote it to use more features</p>
+</h1>
+
 
 This will:
 
