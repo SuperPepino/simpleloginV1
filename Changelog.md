@@ -1,3 +1,6 @@
+# Changelog version 0.1.4
+- made better install explanation cus people dumb
+
 # Changelog version 0.1.3
 - Did A LOT of random bug fixes
 - Fixed changelog not working on some devices
@@ -8,6 +11,7 @@
 - Added unban mechanic
 - Renamed banusername to blacklist to avoid confusion
 - More that I forgot
+- made better install explanation cus people dumb
 
 # Changelog version 0.1.2
 - Improved message system 
