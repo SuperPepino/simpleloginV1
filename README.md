@@ -56,6 +56,17 @@ This system uses **plain text files** as a simple, lightweight database.
 
 ## 🛠️ First-Time Setup
 
+download the program by running:
+```bash
+pip install simple-login-system==0.1.3
+```
+
+Run it by typing
+
+```bash
+python -m simplelogin.login
+```
+
 Run the program and type:
 
 ```bash
