@@ -1,6 +1,6 @@
 [project]
 name = "simple-login-system"
-version = "0.1.4"
+version = "0.1.6"
 description = "Simple login script"
 readme = "README.md"
 authors = [{ name = "Pepino" }]

@@ -1,5 +1,6 @@
 # Changelog version 0.1.4
 - made better install explanation cus people dumb
+- Updated readme cus people dumb
 
 # Changelog version 0.1.3
 - Did A LOT of random bug fixes

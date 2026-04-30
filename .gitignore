@@ -7,3 +7,5 @@ __pycache__/
 *.egg-info/
 dist/
 .vscode/
+loginold.py
+test.py
