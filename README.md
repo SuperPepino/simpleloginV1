@@ -23,7 +23,7 @@
 
 - Fully customizable and easy to extend  
 - Includes real-world features (messaging, permissions, banning, etc.)  
-- Lightweight — no database required  
+- Optimized and Lightweight — no database required  
 
 ---
 
@@ -145,9 +145,9 @@ When a user is banned:
 
 ## 🤝 Contributing
 
-- 🐛 Found a bug? Open an issue  
-- 💡 Have an idea? Suggest a feature  
-- 🔧 Want to improve the code? Submit a PR  
+-  Found a bug? Open an issue  
+-  Have an idea? Suggest a feature  
+-  Want to improve the code? Submit a PR  
 
 All contributions are welcome.
 
@@ -161,6 +161,13 @@ Used copilot for deployment to PyPi and chatgpt for simple bug fixes early on an
 ## 📄 License
 
 This project is free to use for **educational purposes**.
+
+---
+
+## Optimization
+
+- I made the program as optimized as possible by using defs to make it run smooth, I also dont use any databases or external programs that might make it take more memory or cpu capability.
+- I made it run fast and smooth with not too much random bulk that would be in the way of users access to the program
 
 ---
 
