@@ -10,3 +10,4 @@ dist/
 loginold.py
 test.py
 .venv/
+bannedusers.txt

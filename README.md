@@ -19,7 +19,7 @@
 
 ---
 
-## 🌟 Why This Project?
+## 🌟 Why This Project? 🌟
 
 - Fully customizable and easy to extend  
 - Includes real-world features (messaging, permissions, banning, etc.)  
@@ -27,17 +27,17 @@
 
 ---
 
-## ✨ Features
+## ✨ Features ✨
 
-- 🔑 User authentication (login & signup)  
-- 🔒 Password hashing using SHA-256  
-- 📬 User-to-user messaging  
-- 📥 Mailbox system (read, send, clear)  
-- 🛡️ Permission system (tiers 1–5)  
-- ⬆️ User promotion system  
-- 🚫 User banning system  
-- ❌ Account deletion  
-- 🛠️ Initial setup mode  
+- User authentication (login & signup)  
+- Password hashing using SHA-256  
+- Between-user messaging  
+- Mailbox system (read, send, clear)  
+- Permission system (5 tiers)  
+- User promotion system  
+- User banning system  
+- Account deletion  
+- Initial setup mode  
 
 ---
 
@@ -54,7 +54,7 @@ This system uses **plain text files** as a simple, lightweight database.
 
 ---
 
-## 🛠️ First-Time Setup
+## First-Time Setup
 
 download the program by running:
 ```bash
@@ -89,7 +89,7 @@ This will:
 - Username: `setup`  
 - Password: `setup`  
 
-⚠️ **Important:** Delete this account after creating your own admin account and give it perms.
+ **Important:** Delete this account after creating your own admin account and give it perms.
 
 ---
 
@@ -103,7 +103,7 @@ At startup, choose:
 
 ---
 
-## 📜 Commands
+## Commands
 
 | Command         | Description                          |
 | --------------- | ------------------------------------ |
