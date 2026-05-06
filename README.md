@@ -41,11 +41,11 @@
 
 ---
 
-## 🔐 System Overview
+## System Overview
 
 This system uses **plain text files** as a simple, lightweight database.
 
-### 📁 Data Storage
+### Data Storage
 
 - `users.txt` → Stores usernames and hashed passwords  
 - `bannedusers.txt` → Stores banned usernames  
@@ -93,7 +93,7 @@ This will:
 
 ---
 
-## 🧑‍💻 Usage
+## Usage
 
 At startup, choose:
 
@@ -120,7 +120,7 @@ At startup, choose:
 
 ---
 
-## 🚫 Banning System
+## Banning System
 
 - Stored in `bannedusers.txt`  
 
@@ -132,7 +132,7 @@ When a user is banned:
 
 ---
 
-## 🔮 Planned Features
+## Planned Features
 
 - Improved security (salted hashing, validation)
 - Better error handling
@@ -143,7 +143,7 @@ When a user is banned:
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 -  Found a bug? Open an issue  
 -  Have an idea? Suggest a feature  
@@ -152,7 +152,7 @@ When a user is banned:
 All contributions are welcome.
 
 ---
-## 🤖 AI declaration
+## AI declaration
 
 Used copilot for deployment to PyPi and chatgpt for simple bug fixes early on and for writing part of the ReadMe
 
