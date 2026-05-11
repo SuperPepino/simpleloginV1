@@ -19,7 +19,7 @@
 
 ---
 
-## 🌟 Why This Project? 🌟
+## 🌟 Why This Login System? 🌟
 
 - Fully customizable and easy to extend  
 - Includes real-world features (messaging, permissions, banning, etc.)  
@@ -40,12 +40,7 @@
 - Initial setup mode  
 
 ---
-
-## 🔐 System Overview
-
-This system uses **plain text files** as a simple, lightweight database.
-
-### 📁 Data Storage
+### 📁 Data Storage Overview
 
 - `users.txt` → Stores usernames and hashed passwords  
 - `bannedusers.txt` → Stores banned usernames  
@@ -54,11 +49,11 @@ This system uses **plain text files** as a simple, lightweight database.
 
 ---
 
-## First-Time Setup
+## 🚀 Quick-Start Guide
 
 download the program by running:
 ```bash
-pip install simple-login-system==0.1.3
+pip install simple-login-system==0.{version}
 ```
 
 Run it by typing
@@ -93,16 +88,6 @@ This will:
 
 ---
 
-## 🧑‍💻 Usage
-
-At startup, choose:
-
-- `log in`  
-- `sign up`  
-- `setup`  
-
----
-
 ## Commands
 
 | Command         | Description                          |
@@ -118,28 +103,6 @@ At startup, choose:
 | `changelog`     | View changes                         |
 | `quit`          | Exit the program                     |
 
----
-
-## 🚫 Banning System
-
-- Stored in `bannedusers.txt`  
-
-When a user is banned:
-
-- Their account is removed  
-- Their mailbox is deleted  
-- Their username cannot be reused  
-
----
-
-## 🔮 Planned Features
-
-- Improved security (salted hashing, validation)
-- Better error handling
-- Cleaner code structure
-- Database support (SQLite)
-- Logging system
-- Admin tools / interface
 
 ---
 
@@ -152,15 +115,9 @@ When a user is banned:
 All contributions are welcome.
 
 ---
-## 🤖 AI declaration
+## AI declaration
 
-Used copilot for deployment to PyPi and chatgpt for simple bug fixes early on and for writing part of the ReadMe
-
----
-
-## 📄 License
-
-This project is free to use for **educational purposes**.
+Used copilot for deployment to PyPi and chatgpt for simple bug fixes early on.
 
 ---
 
@@ -170,9 +127,11 @@ This project is free to use for **educational purposes**.
 - I made it run fast and smooth with not too much random bulk that would be in the way of users access to the program
 
 ---
-
+<br>
 <p align="center">
   Made with learning in mind.<br>
   If you like it, consider ⭐ starring the repo!
 </p>
-I will try to update this program once in a while so I have a changelog aswel.
+<h3 align="center" ><strong>
+**I will try to update this program once in a while so I have a changelog aswel.**
+</strong></h3>
