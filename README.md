@@ -3,7 +3,8 @@
 </p>
 
 <p align="center">
-  <b>Simple file-based authentication system with messaging, permissions, and moderation.</b>
+  <b>Simple file-based authentication system with messaging, permissions, and
+ moderation features.</b>
 </p>
 
 <p align="center">
@@ -13,17 +14,17 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/status-WIP-orange" height="25">
+  <img src="https://img.shields.io/badge/status-Completed-green" height="25">
   <img src="https://img.shields.io/badge/python-3.x-blue" height="25">
 </p>
 
 ---
 
-## 🌟 Why This Login System? 🌟
+## Why This Login System?
 
 - Fully customizable and easy to extend  
-- Includes real-world features (messaging, permissions, banning, etc.)  
-- Optimized and Lightweight — no database required  
+- Includes useful multi purpose features (messaging, permissions, banning, etc.)  
+- Optimized and Lightweight. No database required
 
 ---
 
@@ -34,13 +35,12 @@
 - Between-user messaging  
 - Mailbox system (read, send, clear)  
 - Permission system (5 tiers)  
-- User promotion system  
-- User banning system  
-- Account deletion  
-- Initial setup mode  
+- Banning system 
+- Blacklisting usernames system
+- Initial setup mode for first use
 
 ---
-### 📁 Data Storage Overview
+### 📁 Data Storage
 
 - `users.txt` → Stores usernames and hashed passwords  
 - `bannedusers.txt` → Stores banned usernames  
@@ -77,14 +77,14 @@ setup
 This will:
 
 - Create a default admin account  
-- Grant admin promotion permissions
+- Grant admin promotion permissions to this account
 
 **Default credentials:**
 
 - Username: `setup`  
 - Password: `setup`  
 
- **Important:** Delete this account after creating your own admin account and give it perms.
+ **Important:** Delete this account after creating your own admin account and giving it perms using the serup user.
 
 ---
 
@@ -106,11 +106,11 @@ This will:
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 -  Found a bug? Open an issue  
 -  Have an idea? Suggest a feature  
--  Want to improve the code? Submit a PR  
+-  Want to improve the code? Submit a Pull Reques 
 
 All contributions are welcome.
 
@@ -123,15 +123,15 @@ Used copilot for deployment to PyPi and chatgpt for simple bug fixes early on.
 
 ## Optimization
 
-- I made the program as optimized as possible by using defs to make it run smooth, I also dont use any databases or external programs that might make it take more memory or cpu capability.
-- I made it run fast and smooth with not too much random bulk that would be in the way of users access to the program
+- I made the program as optimized as possible by using defines to make it run smooth, I also dont use any databases or external programs that might make it take more memory or cpu capability.
+- I made it run fast and smooth with not too much random bulk that would be in the way of users access to the program, but still tried to make it look good
 
 ---
 <br>
 <p align="center">
   Made with learning in mind.<br>
-  If you like it, consider ⭐ starring the repo!
+  If you like it, consider ⭐ing the repo!
 </p>
 <h3 align="center" ><strong>
-**I will try to update this program once in a while so I have a changelog aswel.**
+**I will try to update this program once in a while so I will post devlogs on my <span><a href="pepinoportfolio.vercel.app">website</a></span>. with updates**
 </strong></h3>
