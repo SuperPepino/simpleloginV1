@@ -40,7 +40,7 @@
 - Initial setup mode for first use
 
 ---
-### 📁 Data Storage
+## 📁 Data Storage
 
 - `users.txt` → Stores usernames and hashed passwords  
 - `bannedusers.txt` → Stores banned usernames  
@@ -79,7 +79,7 @@ This will:
 - Create a default admin account  
 - Grant admin promotion permissions to this account
 
-**Default credentials:**
+**With credentials:**
 
 - Username: `setup`  
 - Password: `setup`  
