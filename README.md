@@ -1,53 +1,48 @@
+<img src="https://placehold.co/1200x300/0f172a/ffffff?text=Python+Login+System&font=montserrat" />
+
+
 <p align="center">
-  <img src="https://placehold.co/1200x300/0f172a/ffffff?text=Python+Login+System&font=montserrat" />
+  <b>Simple authentication system with basic messaging functionality and a moderation system.</b>
 </p>
 
 <p align="center">
-  <b>Simple file-based authentication system with messaging, permissions, and
- moderation features.</b>
-</p>
-
-<p align="center">
-  <a href="#">Documentation</a> •
-  <a href="#">Report Bug</a> •
-  <a href="#">Request Feature</a>
+  <a href="https://pepinoportfolio.vercel.app/Projects/PythonLogin">Documentation</a> •
+  <a href="https://github.com/SuperPepino/simpleloginV1/issues">Report Bug</a> •
+  <a href="https://discord.com/channels/@me/938003608132272138">Request Feature</a>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/status-Completed-green" height="25">
-  <img src="https://img.shields.io/badge/python-3.x-blue" height="25">
+  <img src="https://img.shields.io/badge/python-blue" height="25">
+  <img src="https://img.shields.io/badge/hackatime-12h%2005m-blue" height="25">
 </p>
 
 ---
 
-## Why This Login System?
+## Why use This Login System?
 
-- Fully customizable and easy to extend  
-- Includes useful multi purpose features (messaging, permissions, banning, etc.)  
-- Optimized and Lightweight. No database required
-
----
+- Simple to use
+- Includes useful features like messaging, permissions, banning, etc.
+- Lightweight (No database required)
 
 ## ✨ Features ✨
 
-- User authentication (login & signup)  
-- Password hashing using SHA-256  
-- Between-user messaging  
-- Mailbox system (read, send, clear)  
-- Permission system (5 tiers)  
+- Account system
+- Password hashing
+- Between user messaging  
+- Mailbox system
+- Permission system with 5 access levels
 - Banning system 
-- Blacklisting usernames system
-- Initial setup mode for first use
+- Blacklisting offensive usernames
+- Initial setup mode for first time setup
 
----
-## 📁 Data Storage
 
-- `users.txt` → Stores usernames and hashed passwords  
-- `bannedusers.txt` → Stores banned usernames  
-- `user_(id).txt` → Stores user permissions  
-- `mailbox_(username).txt` → Stores user messages  
+## Data Storage
 
----
+- `users.txt` → Stores usernames and hashed passwords
+- `bannedusers.txt` → Stores list of banned usernames
+- `user_(id).txt` → Stores users permissions and data
+- `mailbox_(username).txt` → Stores users inbox
 
 ## 🚀 Quick-Start Guide
 
@@ -62,7 +57,7 @@ Run it by typing
 python -m simplelogin.login
 ```
 
-Run the program and type:
+To setup type:
 
 ```bash
 setup
@@ -70,30 +65,30 @@ setup
 <h1 align="center">
   <b>!DISCLAIMER!</b>
   <p>Setup user can only be used for promoting and some default features</p>
-  <p>Make a different user and promote it to use more features</p>
+  <p>Make a different user and promote it using setup to acecess more features</p>
 </h1>
 
 
-This will:
+Setup will:
 
 - Create a default admin account  
-- Grant admin promotion permissions to this account
+- Grant promotion permissions to this account
 
-**With credentials:**
+**Log in to setup account using:**
 
 - Username: `setup`  
 - Password: `setup`  
 
- **Important:** Delete this account after creating your own admin account and giving it perms using the serup user.
+<h1 align="center">
+ **Important:** Delete this account after creating your own admin account and giving it perms using setup account.
+</h1>
 
----
-
-## Commands
+## Command list
 
 | Command         | Description                          |
-| --------------- | ------------------------------------ |
+| --------------- | -------------------------------------|
 | `help`          | Show all commands                    |
-| `date/time`     | Shows the current date and time      |
+| `date`          | Shows the current date and time      |
 | `message`       | Send a message to a user             |
 | `readmail`      | Read your mailbox                    |
 | `promote`       | Promote a user (requires permission) |
@@ -103,23 +98,17 @@ This will:
 | `changelog`     | View changes                         |
 | `quit`          | Exit the program                     |
 
-
----
-
-## Contributing
+## Contributing to the project
 
 -  Found a bug? Open an issue  
 -  Have an idea? Suggest a feature  
--  Want to improve the code? Submit a Pull Reques 
+-  Want to improve the code? Submit a Pull Request
 
-All contributions are welcome.
+All contributions are welcome and highly encouraged.
 
----
 ## AI declaration
 
 Used copilot for deployment to PyPi and chatgpt for simple bug fixes early on.
-
----
 
 ## Optimization
 
@@ -129,8 +118,7 @@ Used copilot for deployment to PyPi and chatgpt for simple bug fixes early on.
 ---
 <br>
 <p align="center">
-  Made with learning in mind.<br>
-  If you like it, consider ⭐ing the repo!
+  If you like it, consider ⭐ the repo!
 </p>
 <h3 align="center" ><strong>
 **I will try to update this program once in a while so I will post devlogs on my <span><a href="pepinoportfolio.vercel.app">website</a></span>. with updates**
